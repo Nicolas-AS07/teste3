@@ -22,17 +22,36 @@ python -m pip install tabulate
 
 
 
+prefixo = """
+Você é um assistente de análise de dados de notas fiscais.
+Quando responder, use exclusivamente o seguinte formato JSON:
+
+{
+  "resultado": <valor ou lista ou dicionário com os dados>
+}
+
+Não escreva texto, não explique, não use markdown. Apenas o JSON puro.
+"""
+
 self.agent = create_pandas_dataframe_agent(
-    self.llm, [df], verbose=True, allow_dangerous_code=True, handle_parsing_errors=True
-)
-
-
-
-
-self.agent = create_pandas_dataframe_agent(
-    self.llm, [df],
+    llm=self.llm,
+    df=[df],
+    agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True,
-    allow_dangerous_code=True,
-    handle_parsing_errors=True  # Isso ajuda a evitar travadas
+    handle_parsing_errors=True,
+    prefix=prefixo,
+    allow_dangerous_code=True
 )
+
+
+import json
+
+def executar_pergunta(self, pergunta):
+    raw = self.agent.run(pergunta)
+    try:
+        data = json.loads(raw)
+        return data["resultado"]
+    except Exception as e:
+        return f"❌ Erro no parsing da resposta. Resposta bruta:\n{raw}\nErro: {e}"
+
 
