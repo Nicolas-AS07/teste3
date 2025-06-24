@@ -13,3 +13,10 @@ pip install langchain-experimental
 streamlit run nf_analyzer_agent.py
 
 Set-ExecutionPolicy RemoteSigned
+
+
+pip install tabulate
+
+
+python -m pip install tabulate
+
