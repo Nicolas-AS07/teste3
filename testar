@@ -20,3 +20,10 @@ pip install tabulate
 
 python -m pip install tabulate
 
+
+
+self.agent = create_pandas_dataframe_agent(
+    self.llm, [df], verbose=True, allow_dangerous_code=True, handle_parsing_errors=True
+)
+
+
