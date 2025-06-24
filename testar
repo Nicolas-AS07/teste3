@@ -8,6 +8,8 @@ python -m pip install --upgrade pip
 
 pip install pandas streamlit langchain langchain-community
 
+pip install langchain-experimental
 
+streamlit run nf_analyzer_agent.py
 
 Set-ExecutionPolicy RemoteSigned
